@@ -9,7 +9,7 @@
         print("<br>You are studying at $class, $univer");
         print("<br> Your hobby is:");
         print("<br>1. Like Travel");
-        print("<br>1. Like Study");
+        print("<br>2. Like Study");
     ?>
 </body>
 
