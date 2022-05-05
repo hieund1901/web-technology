@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color</title>
+</head>
+<body>
+<a href="" style="color: red"  onmouseover="changeColor(this)"
+                               onmouseout="backToBlack(this)"> RED </a><br />
+
+<a href="" style="color: green"
+                               onmouseover="changeColor(this)"
+                               onmouseout="backToBlack(this)"> GREEN</a><br />
+
+<a href="" style="color: blue"
+                               onmouseover="changeColor(this)"
+                               onmouseout="backToBlack(this)"> BLUE </a><br />
+
+
+<p id="para" style="color: black">
+    Watch color change
+</p>
+<script>
+    const paragraph = document.getElementById("para");
+    function backToBlack() {
+        paragraph.style.color = "black"
+    }
+
+    function changeColor(x){
+        paragraph.style.color =  x.style.color
+    }
+</script>
+
+</body>
+</html>
