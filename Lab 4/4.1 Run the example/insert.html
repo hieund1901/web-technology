@@ -1,0 +1,38 @@
+<html><head><title>Insert</title></head></html>
+<style>
+        *{
+            background-color: azure;
+            font-size: large;
+        }
+        #item, #weight, #cost, #number {
+            display: block;
+            background-color: aliceblue;
+
+        }
+        .item, .weight, .cost, .number{
+            display: block;
+
+        }
+        .submit, .resert{
+            cursor: pointer;
+        }
+        .submit:hover,.resert:hover{
+            background-color: yellow;
+        }
+        </style>
+<body>
+    
+
+<form action="insert_table.php" method="POST">
+    <label for="item" class="item">Item description :</label>
+    <input type="text" id="item" name="itemd"><br>
+    <label for="weight" class="weight"> Weight : </label>
+    <input type="number" id="weight" name="weight" ><br>
+    <label for="cost" class="cost">Cost :</label>
+    <input type="number" id="cost" name="cost"><br>
+    <label for="number" class="number">Number available :  </label>
+    <input type="number" id="number" name="number"><br>
+    <INPUT TYPE="SUBMIT" VALUE="Click To Submit" class="submit">
+    <INPUT TYPE="RESET" VALUE="Resert" class="resert"><br><br>
+</form>   
+</body>
