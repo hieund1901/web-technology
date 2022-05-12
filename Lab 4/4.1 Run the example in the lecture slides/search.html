@@ -1,0 +1,34 @@
+<html><head><title>Search</title></head></html>
+<style>
+        *{
+            background-color: azure;
+            font-size: large;
+        }
+        #item {
+            background-color: aliceblue;
+
+        }
+
+        .submit, .resert{
+            cursor: pointer;
+            background-color:gray;
+            color: white;
+        }
+        .submit:hover,.resert:hover{
+            background-color: black;
+        }
+        h1{
+            color: blue;
+            font-size: 40pt;
+        }
+        </style>
+<body>
+    <h1>Inventory search </h1>
+
+<form action="search.php" method="POST">
+    <label for="item" class="item">Enter Product to search for : </label>
+    <input type="text" id="item" name="itemd"><br> <br>
+    <INPUT TYPE="SUBMIT" VALUE="Click To Submit" class="submit">
+    <INPUT TYPE="RESET" VALUE="Resert" class="resert"><br><br>
+</form>   
+</body>
