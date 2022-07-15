@@ -1,10 +1,6 @@
 import { swalClasses } from '../../classes.js'
 import * as dom from '../../dom/index.js'
 
-/**
- * @param {SweetAlert2} instance
- * @param {SweetAlertOptions} params
- */
 export const renderImage = (instance, params) => {
   const image = dom.getImage()
 
