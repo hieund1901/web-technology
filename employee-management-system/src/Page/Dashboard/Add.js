@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Swal from "sweetalert2";
+import $ from "jquery";
 
 function Add({ employees, setEmployees, setIsAdding }) {
   const [firstName, setFirstName] = useState("");
@@ -7,6 +8,25 @@ function Add({ employees, setEmployees, setIsAdding }) {
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
   const [date, setDate] = useState("");
+
+  const [result, setResult] = useState("");
+
+  const handleChange = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+    const form = $(e.target);
+    $.ajax({
+      type: "POST",
+      url: form.attr("action"),
+      data: form.serialize(),
+      success(data) {
+        setResult(data);
+      },
+    });
+  };
 
   const textInput = useRef(null);
 
@@ -49,7 +69,11 @@ function Add({ employees, setEmployees, setIsAdding }) {
 
   return (
     <div className="small-container">
-      <form onSubmit={handleAdd}>
+      <form
+        action="http://localhost:8000/server.php"
+        onSubmit={(event) => handleSumbit(event)}
+        method="post"
+      >
         <h1>Add Employee</h1>
         <label htmlFor="firstName">First Name</label>
         <input
@@ -58,7 +82,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           ref={textInput}
           name="firstName"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(event) => handleChange(event)}
         />
         <label htmlFor="lastName">Last Name</label>
         <input
@@ -103,6 +127,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
+      <h1>{result}</h1>
     </div>
   );
 }
