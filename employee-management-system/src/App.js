@@ -1,28 +1,10 @@
 import "./App.css";
 import Dashboard from "./Page/Dashboard";
-import { useState } from "react";
-import $ from "jquery";
+//import { useState } from "react";
+//import $ from "jquery";
 
 function App() {
-  const [name, setName] = useState("");
-  const [result, setResult] = useState("");
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    const form = $(e.target);
-    $.ajax({
-      type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
-      success(data) {
-        setResult(data);
-      },
-    });
-  };
   return (
     <div>
       <Dashboard />

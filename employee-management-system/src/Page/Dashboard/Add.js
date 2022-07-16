@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Swal from "sweetalert2";
+//import Swal from "sweetalert2";
 import $ from "jquery";
 
 function Add({ employees, setEmployees, setIsAdding }) {
@@ -34,38 +34,38 @@ function Add({ employees, setEmployees, setIsAdding }) {
     textInput.current.focus();
   }, []);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
-    if (!firstName || !lastName || !email || !salary || !date) {
-      return Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: "All fields are required.",
-        showConfirmButton: true,
-      });
-    }
+  // const handleAdd = (e) => {
+  //   e.preventDefault();
+  //   if (!firstName || !lastName || !email || !salary || !date) {
+  //     return Swal.fire({
+  //       icon: "error",
+  //       title: "Error!",
+  //       text: "All fields are required.",
+  //       showConfirmButton: true,
+  //     });
+  //   }
 
-    const id = employees.length + 1;
-    const newEmployee = {
-      id,
-      firstName,
-      lastName,
-      email,
-      salary,
-      date,
-    };
-    employees.push(newEmployee);
-    setEmployees(employees);
-    setIsAdding(false);
+  //   const id = employees.length + 1;
+  //   const newEmployee = {
+  //     id,
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     salary,
+  //     date,
+  //   };
+  //   employees.push(newEmployee);
+  //   setEmployees(employees);
+  //   setIsAdding(false);
 
-    Swal.fire({
-      icon: "success",
-      title: "Added!",
-      text: `${firstName} ${lastName}'s data has been Added.`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "Added!",
+  //     text: `${firstName} ${lastName}'s data has been Added.`,
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  // };
 
   return (
     <div className="small-container">
