@@ -10,6 +10,8 @@
     $db->connect();
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         echo " method : GET ";
+        $db->getDataNV();
+        file_put_contents('getdata.txt', var_export(json_encode($_GET), true));
 
 
     };
