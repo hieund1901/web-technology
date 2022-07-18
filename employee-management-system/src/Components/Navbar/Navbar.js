@@ -14,14 +14,13 @@ const Navbar = () => {
       <Nav>
         <Bars />
         <NavMenu>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/events">Events</NavLink>
-          <NavLink to="/annual">Annual Report</NavLink>
-          <NavLink to="/team">Teams</NavLink>
-          <NavLink to="/blogs">Blogs</NavLink>
-          <NavLink to="/sign-up">Sign Up</NavLink>
+          <NavLink to="/about">Information</NavLink>
+          <NavLink to="/events">Calendar</NavLink>
+          <NavLink to="/annual">List Employee</NavLink>
+          <NavLink to="/team">Make Announcement</NavLink>
         </NavMenu>
         <NavBtn>
+          <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
           <NavBtnLink to="/signin">Sign In</NavBtnLink>
         </NavBtn>
       </Nav>
