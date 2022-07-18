@@ -15,7 +15,13 @@ function Add({ employees, setEmployees, setIsAdding }) {
     setFirstName(e.target.value);
   };
 
-  const handleSumbit = (e) => {
+  const textInput = useRef(null);
+
+  useEffect(() => {
+    textInput.current.focus();
+  }, []);
+
+  const handleAdd = (e) => {
     e.preventDefault();
     const form = $(e.target);
     $.ajax({
@@ -26,16 +32,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         setResult(data);
       },
     });
-  };
-
-  const textInput = useRef(null);
-
-  useEffect(() => {
-    textInput.current.focus();
-  }, []);
-
-  const handleAdd = (e) => {
-    e.preventDefault();
     if (!firstName || !lastName || !email || !salary || !date) {
       return Swal.fire({
         icon: "error",
@@ -71,7 +67,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
     <div className="small-container">
       <form
         action="http://localhost:8000/server.php"
-        onSubmit={(event) => handleSumbit(event)}
+        onSubmit={(event) => handleAdd(event)}
         method="post"
       >
         <h1>Add Employee</h1>
@@ -127,7 +123,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
-      <h1>{result}</h1>
+      {/* <h1>{result}</h1> */}
     </div>
   );
 }

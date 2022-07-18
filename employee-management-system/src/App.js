@@ -1,50 +1,31 @@
 import "./App.css";
 import Dashboard from "./Page/Dashboard";
-import { useState } from "react";
-import $ from "jquery";
+import Navbar from "./Components/Navbar/Navbar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Components/options";
+import About from "./Components/options/about";
+import Events from "./Components/options/events";
+import AnnualReport from "./Components/options/annual";
+import Teams from "./Components/options/team";
+import Blogs from "./Components/options/blogs";
+import SignUp from "./Components/options/signup";
 
 function App() {
-  const [name, setName] = useState("");
-  const [result, setResult] = useState("");
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    const form = $(e.target);
-    $.ajax({
-      type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
-      success(data) {
-        setResult(data);
-      },
-    });
-  };
   return (
     <div>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/annual" element={<AnnualReport />} />
+          <Route path="/team" element={<Teams />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Routes>
+      </Router>
       <Dashboard />
-      {/* <div className="App">
-        <form
-          action="http://localhost:8000/server.php"
-          method="post"
-          onSubmit={(event) => handleSumbit(event)}
-        >
-          <label htmlFor="name">Name: </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(event) => handleChange(event)}
-          />
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-        <h1>{result}</h1>
-      </div> */}
     </div>
   );
 }
