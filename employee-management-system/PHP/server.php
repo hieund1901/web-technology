@@ -8,6 +8,12 @@
     include "DBConfig.php";
     $db = new Database ;
     $db->connect();
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        echo " method : GET ";
+
+
+    };
+
     if( $_SERVER['REQUEST_METHOD'] == 'POST'){
     //echo ("method_of_request: $method ");
         //echo '<script>';

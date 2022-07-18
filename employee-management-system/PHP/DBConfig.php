@@ -52,6 +52,12 @@
         //return $this->execute($sql);
     }
 
+    public function getDataNV(){
+        $sql = "SELECT *  FROM nhanvientest ";
+        $rs = $this->execute($sql);
+        return $this->console_log("result of getData From DB : $rs");
+    }
+
     public function getListIDNV(){
         $sql = "SELECT * FROM nhanvien WHERE namsinh = 1999 ";
         $rs = mysqli_query($this->connect(),$sql);
