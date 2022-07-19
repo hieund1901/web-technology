@@ -1,0 +1,1 @@
+'{"firstName":"L\\u00f4\\u0303 Ngo\\u0323c","lastName":"Tu\\u0301","email":"tu.ln@gmail.com","salary":"1000","date":"2022-07-23"}'
