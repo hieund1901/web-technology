@@ -9,6 +9,7 @@ import AnnualReport from "./Components/options/annual";
 import Teams from "./Components/options/team";
 import Blogs from "./Components/options/blogs";
 import SignUp from "./Components/options/signup";
+import Calendar from "./Components/Calendar/Calendar";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         </Routes>
       </Router>
       <Dashboard />
+      {/* <Calendar /> */}
     </div>
   );
 }

@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import $ from "jquery";
 
 import Header from "../../Components/Header.js";
 import List from "./List";
 import Add from "./Add";
 import Edit from "./Edit";
 
-import { employeesData } from "../../data";
-
 function Dashboard() {
-  const [employees, setEmployees] = useState(employeesData);
+  const url = "http://localhost:8000/server.php";
+  const [employees, setEmployees] = useState([[]]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const getEmployee = () => {
+    $.ajax({
+      type: "GET",
+      url: url,
+      success(res) {
+        const data = JSON.parse(res);
+        const newResult = Array.from(data);
+        console.log("data: ", newResult);
+        setEmployees([...newResult]);
+      },
+    });
+  };
+
+  useEffect(() => {
+    getEmployee();
+  }, []);
 
   const handleEdit = (id) => {
     const [employee] = employees.filter((employee) => employee.id === id);
