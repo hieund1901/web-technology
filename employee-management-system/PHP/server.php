@@ -8,16 +8,62 @@
     include "DBConfig.php";
     $db = new Database ;
     $db->connect();
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        $opcode = $_GET['opcode'];
+        switch ($opcode){
+            case "getListIDNV":
+                $db->getListIDNV();   
+                break;
+            case "nvGetListShift":
+                $id = $_GET['id'];
+                $date = $_GET['date'];
 
-    //$db->nvGetListShift('2001-11-20', 1);
-  
-    
-    
-    //$db->insertShift('2001-20-15', 2 , 2);
+                $db->nvGetListShift($date, $id);
+                break;
+            case "getListNotification":
+                $idNV = $_GET['id'];
+                $db->getListNotification($idNV);
+                break;
+            case "adminGetListShift":
+                $date = $_GET['date'];
+                $shift = $_GET['shift'];
+                echo "date and shift";
+                echo $date,$shift;
+                $db->adminGetListShift($date, $shift);
+                break;
+            case "getNVbyID":
+                $id = $_GET['id'];
+                $db->getNVbyID($id);
+                break;
+
+        }
+   
+
+       
+
+    };
 
     if( $_SERVER['REQUEST_METHOD'] == 'POST'){
 
         //echo 'console.log('. json_encode( "method: POST" ) .')';
+    $opcode = $_POST['opcode'];
+    switch ($role){
+        case "add":
+            
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $salary = $_POST['salary'];
+    $date = $_POST['date'];
+    $db->getListIDNVV();
+
+   
+
+
+
+
+
+}
 
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
@@ -33,9 +79,12 @@
     //$db->nvGetListShift( $datet, 1);
     //$db->adminGetListShift($datet, 1 );
     //$db->getNVbyID( 1 );
-    $db->updateNVbyID( 3 , $firstName, $lastName,$email,$salary,$date);
+    //$db->updateNVbyID( 3 , $firstName, $lastName,$email,$salary,$date);
     //$db->insertData($firstName, $lastName, $email, $salary, $date);
     //$db->insertShift($date, $firstName, $lastName);
+    //$db->createNotification(1,$datet,"tao thong bao", "hom nay death line");
+    //$db->getListNotification(1);
+    $db->readNotification(2);
     file_put_contents('postdata.txt', var_export(json_encode($_POST), true));
 
     }else{

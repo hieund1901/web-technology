@@ -53,15 +53,18 @@
     }
 
     public function getListIDNV(){
-        $sql = "SELECT * FROM nhanvien WHERE namsinh = 1999 ";
+        $sql = "SELECT * FROM nhanvien  ";
         $rs = mysqli_query($this->connect(),$sql);
-        // return $this->console_log($rs);
         $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
-        mysqli_free_result($rs);
-        
-        return $this->console_log($nv);
-    }
+        // echo "Type of nv: ";
+        // echo gettype($nv);  
+        // mysqli_free_result($rs);
+        // echo "List nv : ";  
+        $json_nv = json_encode($nv);
+        echo $json_nv ;     
+        return ;
 
+    }
     public function updateIDNV($new_value){
         $sql = "UPDATE shift_nv SET list_id_nv='$new_value' WHERE ngay = 707 ";        
         return $this->execute($sql);
@@ -101,24 +104,19 @@
     //  lay danh sach nhan vien bang id (xem nguoi lam cung ca)
     public function nvGetListShift($date, $id){       
         $sql = "SELECT * FROM phanca WHERE date =  '$date' ";
-        $rs = mysqli_query($this->connect(),$sql);
-        //$this->console_log("Result: ");
-        //$this->console_log($rs);
-        
+        $rs = mysqli_query($this->connect(),$sql);     
         $arrShift = array("" , ""); 
         while($list = mysqli_fetch_object($rs)){
-            //echo 9999;
             $arr_id = json_decode($list->list_ID_NV);        
             foreach($arr_id as $i){  
                 if($i == $id){
-                    //echo 'làm ca :', $list->shift, ', đồng nghiêp :';
                     $string = "" ;                                     
                     foreach($arr_id as $j){
                         $sql = "SELECT fistName, lastName FROM nhanvien WHERE id = $j ";
-                        $rscolleagues = mysqli_query($this->connect(),$sql);    
+                        $rscolleagues = mysqli_query($this->connect(),$sql);        
                         $nv = mysqli_fetch_object($rscolleagues);  
-                        //echo  '<br> ' , $nv->fistName, $nv->lastName; 
-                        $string = $string.$nv->fistName." ".$nv->lastName." ";
+                       // echo "string",$string;
+                        $string = $string."'".$nv->fistName." ".$nv->lastName."' ";
                     }
 
                     if($list->shift == 1){
@@ -132,8 +130,9 @@
 
 
         }
-        $this->console_log($arrShift);
-        return $arrShift ;
+        $jsonArrShift = json_encode($arrShift);
+        echo $jsonArrShift;
+        return ;
 
     }
     public function adminGetListShift($date, $shift){       
@@ -151,7 +150,7 @@
                         $sql = "SELECT fistName, lastName FROM nhanvien WHERE id = $i ";
                         $rscolleagues = mysqli_query($this->connect(),$sql);    
                         $nv = mysqli_fetch_object($rscolleagues);  
-                        $listShift = $listShift .$nv->fistName." ".$nv->lastName." ";
+                        $listShift = $listShift ."'".$nv->fistName." ".$nv->lastName."' ";
                     }
 
         }
@@ -165,11 +164,10 @@
         $sql = "SELECT * FROM nhanvien WHERE id= '$id' ";
         $rs = mysqli_query($this->connect(),$sql);
         $nv = mysqli_fetch_object($rs);
+ 
+        $jsonNV = json_encode($nv);
+        echo $jsonNV;
 
-        echo "fistname :",$nv->fistName,"<br> lastName", $nv->lastName,"<br>";
-        echo "email :" ,$nv->email,"<br>";
-        echo "salary :" , $nv->salary, "<br>";
-        echo "date of birth : ", $nv->date, "<br>";
 
 
     }
@@ -205,11 +203,27 @@
        
     }
 
-    function updateShift(){
 
-
+    public function createNotification($idNV, $date, $title, $content){
+        $sql = "INSERT INTO `thongbao`(`id_nv`, `date`, `title`, `content`, `isRead`)
+        VALUES ('$idNV','$date','$title','$content','0')";
+        $this->execute($sql);
 
     }
+
+    public function getListNotification($idNV){
+        $sql = "SELECT * FROM thongbao  WHERE id_NV = $idNV ";
+        $rs = mysqli_query($this->connect(),$sql);     
+        $data = mysqli_fetch_array($rs);
+        $jsonData = json_encode($data);
+        echo $jsonData;      
+    }
+
+    public function readNotification($id){
+        $sql = "UPDATE `thongbao` SET `isRead`='1' WHERE `id`='$id'";
+        $this->execute($sql);
+    }
+
  }
 
 ?>
