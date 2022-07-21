@@ -3,13 +3,15 @@ import Swal from "sweetalert2";
 import $ from "jquery";
 
 function Add({ employees, setEmployees, setIsAdding }) {
+  const url = "http://localhost:8000/server.php";
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
   const [date, setDate] = useState("");
 
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState([]);
 
   const handleChange = (e) => {
     setFirstName(e.target.value);
@@ -26,8 +28,8 @@ function Add({ employees, setEmployees, setIsAdding }) {
     const form = $(e.target);
     $.ajax({
       type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
+      url: url,
+      data: form.serialize() + "&" + $.param({ opcode: "addNV" }),
       success(data) {
         setResult(data);
       },
@@ -60,6 +62,25 @@ function Add({ employees, setEmployees, setIsAdding }) {
       text: `${firstName} ${lastName}'s data has been Added.`,
       showConfirmButton: false,
       timer: 1500,
+    });
+  };
+
+  const getAJAX = (e) => {
+    e.preventDefault();
+
+    const form = $(e.target);
+
+    $.ajax({
+      type: "GET",
+
+      url: form.attr("action"),
+
+      success(res) {
+        const data = JSON.parse(res);
+        const newResult = Array.from(data);
+        // console.log("data: ", newResult);
+        setResult([...newResult]);
+      },
     });
   };
 
@@ -123,7 +144,28 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
-      {/* <h1>{result}</h1> */}
+      {/* <form
+        action="http://localhost:8000/server.php"
+        onSubmit={(event) => getAJAX(event)}
+        method="get"
+      >
+        <label htmlFor="getAJAX">GET</label>
+
+        <div style={{ marginTop: "30px" }}>
+          <input type="submit" value="Get" />
+
+          <input
+            style={{ marginLeft: "12px" }}
+            className="muted-button"
+            type="button"
+            value="Cancel"
+            onClick={() => setIsAdding(false)}
+          />
+        </div>
+      </form>
+      {result.map((res) => {
+        return <h2>{res.firstName}</h2>;
+      })} */}
     </div>
   );
 }
