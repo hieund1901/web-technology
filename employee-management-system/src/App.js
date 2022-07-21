@@ -22,47 +22,23 @@ function App() {
   const updateLogin = (x)=>{
     setResLogin(x); // 1 la quan li , 2 la nv
   }
-
-  
-
-  if ( resLogin ==1 ){
-    
-    return (
-    <div>            
-    
-        <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/annual" element={<AnnualReport />} />
-          <Route path="/team" element={<Teams />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/sign-up" element={<SignUp />} />
-        </Routes>
-        <Dashboard />
-        </Router> 
-    </div>)
-
-  } 
-
-  
-  
-  if ( resLogin == 2){
-    
-    return (
-      <div>
-        <Employee></Employee>
-      </div>
-    )
+  // const updateLoginEm = ()=>{
+  //   setResLogin(2);
+  // }
+  let checkEmploy = false
+  console.log("resLogin",resLogin);
+  if (resLogin == true){
+    checkEmploy = !checkEmploy;
+    console.log("checkEmploy",checkEmploy);
   }
 
-  // return (// setIsLogin o day
+  
+
+  // if ( resLogin ==1 ){
     
-  //   <div>
-            
-  //     { resLogin == 1 ? (
+  //   return (
+  //   <div>            
+    
   //       <Router>
   //       <Navbar />
   //       <Routes>
@@ -75,23 +51,53 @@ function App() {
   //         <Route path="/sign-up" element={<SignUp />} />
   //       </Routes>
   //       <Dashboard />
-  //     </Router>
-  //     ) : (
-  //       <Login updateLogin={updateLogin}
-  //        />      
-  //     )}
+  //       </Router> 
+  //   </div>)
 
-  //   {/* {resLogin == 2&&resLogin ==1? (<Employee></Employee>):(<Login updateLogin={updateLogin}/>)}   */}
+  // } 
+
+  
+  
+  // if ( resLogin == 2){
+    
+  //   return (
+  //     <div>
+  //       <Employee></Employee>
+  //     </div>
+  //   )
+  // }
+  
+
+
+    return (// setIsLogin o day    
+      <div>            
+        { resLogin  ? (
+          <Router>
+          <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/annual" element={<AnnualReport />} />
+              <Route path="/team" element={<Teams />} />
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/sign-up" element={<SignUp />} />
+            </Routes>
+          <Dashboard />
+        </Router>  
+          
+        
+        ) : (
+          
+          <Login props={updateLogin}/>
+        )}
+        
+        {!checkEmploy && <Employee/>}
+    
+      </div>
+    );
    
-  //   </div>
-  // );
 
-  return (
-    <div>
-      <Login />
-    </div>
-
-  )
 }
 
 export default App;

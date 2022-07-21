@@ -37,7 +37,7 @@
                
     }
     public function checkLogin($username){
-        $sql = "SELECT email,salary FROM nhanvientest WHERE email = '$username'";
+        $sql = "SELECT id,email,salary FROM nhanvien WHERE email = '$username'";
         $rs = $this->execute($sql);
         $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
         //echo $row ;
@@ -54,10 +54,18 @@
     }
 
     public function insertData($firstName, $lastName, $email, $salary, $date){
-        $sql = "INSERT INTO nhanvientest(firstName,lastName,email,salary,date) VALUES ('$firstName','$lastName','$email','$salary','$date')";
+        $sql = "INSERT INTO nhanvient(firstName,lastName,email,salary,date) VALUES ('$firstName','$lastName','$email','$salary','$date')";
         // $rs = $this->execute($sql);
         // return $this->console_log("result of insert DB : $rs");
         return $this->execute($sql);
+    }
+
+    public function getNVbyID($id){
+        $sql = "SELECT * FROM nhanvien WHERE id= '$id' ";
+        $rs = mysqli_query($this->connect(),$sql);
+        $nv = mysqli_fetch_object($rs); 
+        $jsonNV = json_encode($nv);
+        echo $jsonNV;
     }
 
     // public function getDataNV(){
@@ -67,15 +75,13 @@
     // }
 
     public function getListIDNV(){
-        $sql = "SELECT * FROM nhanvientest  ";
-        $rs = mysqli_query($this->connect(),$sql);
-        
+        $sql = "SELECT * FROM nhanvien  ";
+        $rs = mysqli_query($this->connect(),$sql);        
         $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
         echo "Type of nv: ";    
         echo gettype($nv);    
-       
-        
-       
+     
+      
         //mysqli_free_result($rs);
         echo "List nv : ";  
         $json_nv = json_encode($nv);
@@ -83,40 +89,46 @@
         return  $nv;
     }
 
-    public function updateIDNV($new_value){
-        $sql = "UPDATE shift_nv SET list_id_nv='$new_value' WHERE ngay = 707 ";        
-        return $this->execute($sql);
+    // public function updateIDNV($new_value){
+    //     $sql = "UPDATE shift_nv SET list_id_nv='$new_value' WHERE ngay = 707 ";        
+    //     return $this->execute($sql);
+    // }
+
+    public function updateNVbyID($id, $firstName, $lastName, $email, $salary, $date){
+        $sql = "UPDATE `nhanvien` SET `firstName`='$firstName',`lastName`='$lastName',
+        `email`='$email',`salary`='$salary',`date`='$date' WHERE `id`='$id' ";
+        $this->execute($sql);
     }
 
-    public function getListIDNVV(){//truyen 1 phan tu moi ( afternoon ) qua tham so 
-        $sql = "SELECT list_id_nv FROM shift_nv WHERE ngay = 707 ";
-        $rs = mysqli_query($this->connect(),$sql);      
-        $nv = mysqli_fetch_object($rs);
-        mysqli_free_result($rs); 
-        $this->console_log('typeof list_id_nv: ');
-        $this->console_log(gettype($nv->list_id_nv));  
-        $this->console_log($nv->list_id_nv);
-        $arr_id = json_decode($nv->list_id_nv);     
-        $this->console_log('typeof arr_id: ');
-        $this->console_log(gettype($arr_id)); 
-        $this->console_log($arr_id); 
-        // $this->console_log(gettype($nv[0]['list_id_nv']));       
-        // $this->console_log($nv[0]['list_id_nv']);       
-        if (in_array('afternoon',$arr_id)){
-            return $this->console_log('Already exist in arr');
-        }
+    // public function getListIDNVV(){//truyen 1 phan tu moi ( afternoon ) qua tham so 
+    //     $sql = "SELECT list_id_nv FROM shift_nv WHERE ngay = 707 ";
+    //     $rs = mysqli_query($this->connect(),$sql);      
+    //     $nv = mysqli_fetch_object($rs);
+    //     mysqli_free_result($rs); 
+    //     $this->console_log('typeof list_id_nv: ');
+    //     $this->console_log(gettype($nv->list_id_nv));  
+    //     $this->console_log($nv->list_id_nv);
+    //     $arr_id = json_decode($nv->list_id_nv);     
+    //     $this->console_log('typeof arr_id: ');
+    //     $this->console_log(gettype($arr_id)); 
+    //     $this->console_log($arr_id); 
+    //     // $this->console_log(gettype($nv[0]['list_id_nv']));       
+    //     // $this->console_log($nv[0]['list_id_nv']);       
+    //     if (in_array('afternoon',$arr_id)){
+    //         return $this->console_log('Already exist in arr');
+    //     }
 
-        array_push($arr_id,'afternoon');
+    //     array_push($arr_id,'afternoon');
         
-        $this->console_log('after add arr_id: ');
-        $this->console_log($arr_id);
-        $new_arr_id = json_encode($arr_id);
-        $this->console_log('typeof new_arr_id: ');
-        $this->console_log(gettype($new_arr_id)); 
-        $this->console_log($new_arr_id);
+    //     $this->console_log('after add arr_id: ');
+    //     $this->console_log($arr_id);
+    //     $new_arr_id = json_encode($arr_id);
+    //     $this->console_log('typeof new_arr_id: ');
+    //     $this->console_log(gettype($new_arr_id)); 
+    //     $this->console_log($new_arr_id);
 
-        return $this->updateIDNV($new_arr_id) ;
-    }
+    //     return $this->updateIDNV($new_arr_id) ;
+    // }
 
     //admin 
     public function adminGetListShift($date, $shift){       
@@ -156,7 +168,7 @@
                 if($i == $id){
                     $string = "" ;                                     
                     foreach($arr_id as $j){
-                        $sql = "SELECT firstName, lastName FROM nhanvientest WHERE id = $j ";
+                        $sql = "SELECT firstName, lastName FROM nhanvien WHERE id = $j ";
                         $rscolleagues = mysqli_query($this->connect(),$sql);
                         //echo " rscoll:  ";
                         file_put_contents('checkrscoll.txt', var_export(json_encode($rscolleagues), true)); 
@@ -181,6 +193,18 @@
         return ;
     }
 
+    
+    public function deleteNVbyID($id){
+        $sql = "DELETE FROM `nhanvien` WHERE id = '$id'";
+        $this->execute($sql);
+    }
+
+    public function createNotification($idNV, $date, $title, $content){
+        $sql = "INSERT INTO `thongbao`(`id_nv`, `date`, `title`, `content`, `isRead`)
+        VALUES ('$idNV','$date','$title','$content','0')";
+        $this->execute($sql);
+    }
+
     public function getListNotification($idNV){
         $sql = "SELECT * FROM thongbao  WHERE id_nv = $idNV ";
         $rs = mysqli_query($this->connect(),$sql); 
@@ -191,6 +215,11 @@
         echo $jsonData;      
     }
 
- }
+    public function readNotification($id){
+        $sql = "UPDATE `thongbao` SET `isRead`='1' WHERE `id`='$id'";
+        $this->execute($sql);
+    }
+
+ }  
 
 ?>

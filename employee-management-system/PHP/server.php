@@ -4,10 +4,6 @@
     // header("Content-type:application/json");
     // header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Authorization');
     
-    // di qua file check login truoc ms xuong duoi
-    //if $_POST['login'] require once file check Login , switch case role xu li voi tung role tuong ung 
-    //Sau khi login ms nhan cac request .
-    //if $_POST ['log out'] require once log out
     include "DBConfig.php";
     include "login.php";
     $db = new Database ;
@@ -30,8 +26,11 @@
                         echo "date and shift";
                         echo $date,$shift;
                         $db->adminGetListShift($date, $shift);
-                        break;
-                    
+                        break; 
+                    case "getNVbyID":
+                        $id = $_GET['id'];
+                        $db->getNVbyID($id);
+                        break;                   
                 }
                 break;
             case "employee":
@@ -67,16 +66,20 @@
             //$pass = $_POST['pass'];
             //$role = $_POST['role'];
             //check user password
-            $rsCheckLogin = $db->checkLogin($emailS);// dang check email co trg DB hay ko ?? 
+            $rsCheckLogin = $db->checkLogin($emailS);
+            // dang check email co trg DB hay ko ?? 
+            $email = $rsCheckLogin['email'];
+            $id = $rsCheckLogin["id"];
+            $pass = $rsCheckLogin["salary"];
             if (is_array($rsCheckLogin)){
-                $_SESSION["email"]=$rsCheckLogin['email'];            
-                $_SESSION["pass"]=$rsCheckLogin['salary'];// tam thoi salary thay pass  
+                $_SESSION["$email"]=$rsCheckLogin['email'];
+                $_SESSION["$id"] = $rsCheckLogin["id"];           
+                //$_SESSION["$pass"]=$rsCheckLogin['salary'];// tam thoi salary thay pass  
                 file_put_contents('success_login.txt', var_export(json_encode($_SESSION), true));    
-                echo "1" ;
+                echo "true" ;
             }
             else {
                 echo "false login";
-                //require_once("post.php");
             }
         }
         // quan li
@@ -87,7 +90,7 @@
                 case "admin":                
                     switch ($opcode_post){
                         case "addNV":
-                            echo " method_POST opcode addNV ";
+
                             // $firstName = $_POST['firstName'];
                             // $lastName = $_POST['lastName'];
                             // $email = $_POST['email'];
@@ -96,13 +99,29 @@
                             // $rs = $db->insertData($firstName, $lastName, $email, $salary, $date);
                             // echo " Rs opcode add : $rs";
                             break ;
-                        case "updateNV":
+                        case "updateNVbyID":
+                            $id = $_POST['id'];
+                            $firstName = $_POST['firstName'];
+                            $lastName = $_POST['lastName'];
+                            $email = $_POST['email'];
+                            $salary = $_POST['salary'];
+                            $date = $_POST['date'];
+                            $db->updateNVbyID($id, $firstName, $lastName, $email, $salary, $date);
+
                             break;
-                        case "deleteNV":
-                            break;
+                        case "deleteNVbyID":
+                            $id = $_POST['id'];
+                            $db->deleteNVbyID($id);
+                            break; 
+                            
                         case "addShift":
                             break;
-                        case "addAnnouce":
+                        case "createNotification":
+                            $id = $_POST['id'];
+                            $date = $_POST['date'];
+                            $content = $_POST['content'];
+                            $title = $_POST['title'];
+                            $db->createNotification($id, $date, $title, $content);
                             break;
                         default:
                     }
@@ -110,7 +129,10 @@
                 case "employee":
                     
                     switch ($opcode_post){
-                        case "":
+                        case "readNotification":
+                            $id = $_POST['id'];
+                            $db->readNotification($id);
+                            echo "id la mmmm",$id;
                             break;
                         default:
 
@@ -134,8 +156,7 @@
     //file_put_contents('postaddparamdata.txt', var_export(json_encode($_POST), true));
     //$param_login = $_POST['param1'];//test log in , log out
     //$param_logout = $_POST['param2/logout'];//gui kèm thông tin user để sau đó check trong session ton tai chưa / log in chưa .
-    //$checkLogin->checkAccountandRole($param_login);
-    
+    //$checkLogin->checkAccountandRole($param_login);   
 
 
         file_put_contents('session.txt', var_export(json_encode($_SESSION), true));
@@ -143,17 +164,9 @@
         unset($_SESSION["email"]);
         unset($_SESSION["pass"]);
         file_put_contents('sessionafter_unset.txt', var_export(json_encode($_SESSION), true));
-    // if(isset($param_logout)){
-
-    //     if (isset($_SESSION["$param_login"])){
-    //         unset($_SESSION["$param_login"]);
-    //     }
-    // }
     }   
 
-    if(count($_SESSION) === 0){//neu $_Session rỗng 
-       // echo " Destroy Session";
-        
+    if(count($_SESSION) === 0){        
         session_destroy();
     }
 ?>

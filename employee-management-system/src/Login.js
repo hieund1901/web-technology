@@ -4,7 +4,7 @@ import $ from "jquery";
 
 
 
-function Login({ employees, setEmployees,resLogin, updateLogin }) {
+function Login({  props }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const url = "http://localhost:8000/server.php";
@@ -22,12 +22,13 @@ function Login({ employees, setEmployees,resLogin, updateLogin }) {
       url: form.attr("action"),      
       data: form.serialize()+'&' + $.param({login:"login",email:"123rf@gmail.com"}),// them role
       success(res) {
-        if(res == "1"){
-           updateLogin(1) ;
+        if(res == "true"){
+           props(true) ;
         }
-        if (res == "2" ){
-          updateLogin(2);
+        if (res == 2){
+           props(2);
         }
+
       },
     });
   };
