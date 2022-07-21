@@ -14,16 +14,32 @@ function Add({ employees, setEmployees, setIsAdding }) {
   const handleChange = (e) => {
     setFirstName(e.target.value);
   };
+  const getAJAX = (e)=>{
+    e.preventDefault();
+    const form = $(e.target);
+    $.ajax({
+      type: "GET",
+      url: form.attr("action"),      
+      data: '&' + $.param({role:"employee",opcode:"getListNotification",id:"3",date:"2001-1-2"}),
+      success(res) {
+        setResult(res);
+        //console.log("Data res ajax: ",res)
+        console.log("Get ajax res: ",res)
+      },
+    });
+
+  }
 
   const handleSumbit = (e) => {
     e.preventDefault();
     const form = $(e.target);
     $.ajax({
       type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
-      success(data) {
-        setResult(data);
+      url: form.attr("action"),      
+      data: form.serialize()+'&' + $.param({login:"login",pass:"2222",role:"admin",opcode:"addNV"}),// them role
+      success(res) {
+        setResult(res);
+        console.log("Data res ajax: ",res)
       },
     });
   };
@@ -118,6 +134,22 @@ function Add({ employees, setEmployees, setIsAdding }) {
         />
         <div style={{ marginTop: "30px" }}>
           <input type="submit" value="Add" />
+          <input
+            style={{ marginLeft: "12px" }}
+            className="muted-button"
+            type="button"
+            value="Cancel"
+            onClick={() => setIsAdding(false)}
+          />
+        </div>
+      </form>
+      <form
+        action="http://localhost:8000/server.php"
+        onSubmit={(event) => getAJAX(event)}
+        method="get">
+       <label htmlFor="getAJAX">GET</label>
+       <div style={{ marginTop: "30px" }}>
+          <input type="submit" value="Get" />
           <input
             style={{ marginLeft: "12px" }}
             className="muted-button"

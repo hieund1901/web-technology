@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import Header from './Header';
 import List from './List';
 import Add from './Add';
+import Login from '../../Login';
+//import Schedule from './ScheduleSelected';
 import Edit from './Edit';
 
 import { employeesData } from '../../data';
@@ -13,6 +15,7 @@ function Dashboard() {
     const [employees, setEmployees] = useState(employeesData);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
+    //const [isLogin, setIsLogin] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEdit = (id) => {
@@ -51,7 +54,7 @@ function Dashboard() {
     return (
         <div className='container'>
             {/* List */}
-            {!isAdding && !isEditing && (
+            {!isAdding && !isEditing && (// phai co 1 bien nua check dang nhap dua tren res tra ve tu ajax
                 <>
                     <Header
                         setIsAdding={setIsAdding}
@@ -64,8 +67,22 @@ function Dashboard() {
                 </>
             )}
             {/* Add */}
-            {isAdding && (
+            {/* {isAdding && (
                 <Add
+                    employees={employees}
+                    setEmployees={setEmployees}
+                    setIsAdding={setIsAdding}
+                />
+            )} */}
+            {/* {isAdding && (
+                <Schedule
+                    
+                />
+            )} */}
+
+            {/* login */}
+            {isAdding && (
+                <Login
                     employees={employees}
                     setEmployees={setEmployees}
                     setIsAdding={setIsAdding}

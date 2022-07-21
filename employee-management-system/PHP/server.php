@@ -72,7 +72,7 @@
                 $_SESSION["email"]=$rsCheckLogin['email'];            
                 $_SESSION["pass"]=$rsCheckLogin['salary'];// tam thoi salary thay pass  
                 file_put_contents('success_login.txt', var_export(json_encode($_SESSION), true));    
-                echo "true" ;
+                echo "1" ;
             }
             else {
                 echo "false login";
