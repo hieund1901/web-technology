@@ -1,8 +1,7 @@
 import React from "react";
 import Dashboard from "../../Page/Dashboard";
-import Employee from "../../Page/Employee";
 
-const About = () => {
+const List = () => {
   return (
     <div>
       <Dashboard />
@@ -10,4 +9,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default List;

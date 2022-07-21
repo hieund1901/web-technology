@@ -38,18 +38,18 @@
         // $rs = $this->conn->query($sql);
         // $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
         // mysqli_free_result($rs);
-        // return $nv ;
+        // return $nv ;delete
     }
 
     public function insertData($firstName, $lastName, $email, $salary, $date){
-        $sql = "INSERT INTO nhanvientest(firstName,lastName,email,salary,date) VALUES ('$firstName','$lastName','$email','$salary','$date')";
+        $sql = "INSERT INTO nhanvien(firstName,lastName,email,salary,date) VALUES ('$firstName','$lastName','$email','$salary','$date')";
         $rs = $this->execute($sql);
         return $this->console_log("result of insert DB : $rs");
         //return $this->execute($sql);
     }
 
     public function getDataNV(){
-        $sql = "SELECT *  FROM nhanvientest ";
+        $sql = "SELECT *  FROM nhanvien ";
         return $this->execute($sql);
     }
 
@@ -100,7 +100,7 @@
 
     public function getListData() {
 
-        $sql = "SELECT * FROM nhanvientest";
+        $sql = "SELECT * FROM nhanvien";
 
         $rs = mysqli_query($this->connect(),$sql);
 
@@ -122,10 +122,54 @@
 
         $json_nv = json_encode($nv);
         echo $json_nv ;
-        // print_r($nv)
 
         return;
     }
+
+    public function getListNotification($idNV){
+        $sql = "SELECT * FROM thongbao  WHERE id_NV = $idNV ";
+        $rs = mysqli_query($this->connect(),$sql);     
+        $data = mysqli_fetch_all($rs, MYSQLI_ASSOC);
+        $jsonData = json_encode($data);
+        echo $jsonData;      
+    }
+
+    public function deleteNVbyID($id){
+    
+        $sql = "DELETE FROM `nhanvien` WHERE id = '$id'";
+        $this->execute($sql);
+    }
+
+    public function updateNVbyID($id, $firstName, $lastName, $email, $salary, $date){
+        $sql = "UPDATE `nhanvien` SET `firstName`='$firstName',`lastName`='$lastName',
+        `email`='$email',`salary`='$salary',`date`='$date' WHERE `id`='$id' ";
+        $this->execute($sql);
+    }
+    public function createNotification($idNV, $date, $title, $content){
+        $sql = "INSERT INTO `thongbao`(`id_nv`, `date`, `title`, `content`, `isRead`)
+        VALUES ('$idNV','$date','$title','$content','0')";
+        $this->execute($sql);
+
+    }
+    public function readNotification($id){
+        $sql = "UPDATE `thongbao` SET `isRead`='1' WHERE `id`='$id'";
+        $this->execute($sql);
+    }
+
+    public function checkLogin($username){
+
+        $sql = "SELECT id,email,salary FROM nhanvien WHERE email = '$username'";
+
+        $rs = $this->execute($sql);
+
+        $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
+
+        //echo $row ;
+
+        return $row ;
+
+    }
+
 
  }
 

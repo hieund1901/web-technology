@@ -17,9 +17,13 @@ const Navbar = () => {
         <NavMenu>
           <NavLink to="/about">Information</NavLink>
           <NavLink to="/events">Calendar</NavLink>
-          <NavLink to="/annual">List Employee</NavLink>
+          <NavLink to="/list">List Employee</NavLink>
           <>
-            {checked ? <NavLink to="/team">Make Announcement</NavLink> : <></>}
+            {checked ? (
+              <NavLink to="/annoucement">Make Announcement</NavLink>
+            ) : (
+              <></>
+            )}
           </>
         </NavMenu>
         <NavBtn>

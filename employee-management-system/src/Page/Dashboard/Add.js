@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 import $ from "jquery";
 
 function Add({ employees, setEmployees, setIsAdding }) {
+  const url = "http://localhost:8000/server.php";
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,11 +28,10 @@ function Add({ employees, setEmployees, setIsAdding }) {
     const form = $(e.target);
     $.ajax({
       type: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
+      url: url,
+      data: form.serialize() + "&" + $.param({ opcode: "addNV" }),
       success(data) {
         setResult(data);
-        console.log(data);
       },
     });
     if (!firstName || !lastName || !email || !salary || !date) {
@@ -143,7 +144,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
-      <form
+      {/* <form
         action="http://localhost:8000/server.php"
         onSubmit={(event) => getAJAX(event)}
         method="get"
@@ -164,7 +165,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
       </form>
       {result.map((res) => {
         return <h2>{res.firstName}</h2>;
-      })}
+      })} */}
     </div>
   );
 }

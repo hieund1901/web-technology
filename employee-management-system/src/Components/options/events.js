@@ -1,4 +1,5 @@
 import React from "react";
+import Calendar from "../Calendar/Calendar";
 
 const Events = () => {
   return (
@@ -9,7 +10,7 @@ const Events = () => {
         alignItems: "right",
       }}
     >
-      <h1>Welcome to Events</h1>
+      <Calendar />
     </div>
   );
 };
