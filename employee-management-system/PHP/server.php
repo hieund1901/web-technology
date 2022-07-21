@@ -63,12 +63,17 @@
             break;  
             
         case "createNotification":
-                $id = $_POST['id'];
-                $date = $_POST['date'];
-                $content = $_POST['content'];
-                $title = $_POST['title'];
-                $db->createNotification($id, $date, $title, $content);
-                break;
+            $id = $_POST['id'];
+            $date = $_POST['date'];
+            $content = $_POST['content'];
+            $title = $_POST['title'];
+            $db->createNotification($id, $date, $title, $content);
+            break;
+        case "readNotification":
+            $id = $_POST['id'];
+            $db->readNotification(($id));
+            echo "id la mmmm",$id;
+            break;
     }        
             
 
