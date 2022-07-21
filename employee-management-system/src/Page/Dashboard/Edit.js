@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
+import $ from "jquery";
 
 function Edit({ employees, selectedEmployee, setEmployees, setIsEditing }) {
 
@@ -11,8 +12,33 @@ function Edit({ employees, selectedEmployee, setEmployees, setIsEditing }) {
     const [salary, setSalary] = useState(selectedEmployee.salary);
     const [date, setDate] = useState(selectedEmployee.date);
 
+    // const editEmployee = (id) => {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: url,
+    //         data: form.serialize() + '&' + $.param({ opcode: "updateNVbyID" }),
+    //         success(res) {
+    //             console.log("data: ", res);
+
+    //         },
+    //     });
+    // };
+
+
     const handleUpdate = e => {
         e.preventDefault();
+
+        const form = $(e.target);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: form.serialize() + "&" + $.param({ opcode: "updateNVbyID", id: id }),
+            success(data) {
+                console.log("Type of fron end: ", data)
+            },
+        });
+
+
 
         if (!firstName || !lastName || !email || !salary || !date) {
             return Swal.fire({
@@ -53,7 +79,11 @@ function Edit({ employees, selectedEmployee, setEmployees, setIsEditing }) {
 
     return (
         <div className="small-container">
-            <form onSubmit={handleUpdate}>
+            <form
+                onSubmit={handleUpdate}
+                action="http://localhost:8000/server.php"
+            >
+
                 <h1>Edit Employee</h1>
                 <label htmlFor="firstName">First Name</label>
                 <input

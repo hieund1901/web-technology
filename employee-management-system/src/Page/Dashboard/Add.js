@@ -27,6 +27,24 @@ function Add({ employees, setEmployees, setIsAdding }) {
       },
     });
   };
+  const getAJAX = (e) => {
+
+    e.preventDefault();
+
+    const form = $(e.target);
+
+    $.ajax({
+      type: "GET",
+      url: form.attr("action"),
+      data: '&' + $.param({ opcode: "getListNotification", date: "2001-20-11", shift: "1", id: "1" }),
+      success(res) {
+        const obj = JSON.parse(res);
+        setResult(res);
+        console.log("Type of fron end: ", typeof (obj))
+        console.log("Data res ajax: ", obj)
+      },
+    });
+  }
 
   const textInput = useRef(null);
 
@@ -66,6 +84,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
   //     timer: 1500,
   //   });
   // };
+
 
   return (
     <div className="small-container">
@@ -127,8 +146,38 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
-      <h1>{result}</h1>
+      [2:42 PM] DO DUC THANG 20183830
+      <form
+        action="http://localhost:8000/server.php"
+        onSubmit={(event) => getAJAX(event)}
+        method="get">
+        <label htmlFor="getAJAX">GET</label>
+        <div style={{ marginTop: "30px" }}>
+          <input type="submit" value="Get" />
+          <input
+            style={{ marginLeft: "12px" }}
+            className="muted-button"
+            type="button"
+            value="Cancel"
+            onClick={() => setIsAdding(false)}
+          />
+        </div>
+      </form>
+
+
+
+
+      <h1>{result
+
+
+
+
+
+
+
+      }</h1>
     </div>
+
   );
 }
 

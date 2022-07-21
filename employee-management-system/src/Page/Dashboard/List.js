@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState } from "react";
+import $ from "jquery";
 
 function List({ employees, handleEdit, handleDelete }) {
-
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: null
+    const formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: null,
     });
 
     return (
-        <div className='contain-table'>
-            <table className='striped-table'>
+        <div className="contain-table">
+            <table className="striped-table">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -44,7 +44,7 @@ function List({ employees, handleEdit, handleDelete }) {
                                 </td>
                                 <td className="text-left">
                                     <button
-                                        onClick={() => handleDelete(employee.id)}
+                                        onClick={(event) => handleDelete(employee.id, event)}
                                         className="button muted-button"
                                     >
                                         Delete
@@ -60,7 +60,7 @@ function List({ employees, handleEdit, handleDelete }) {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
 
-export default List
+export default List;
