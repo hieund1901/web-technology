@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 //import Swal from "sweetalert2";
 import $ from "jquery";
 
-function Login({ props }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const url = "http://localhost:8000/server.php";
+function Login({ props , setIsAdmin }) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  //const url = "http://localhost:8000/server.php";
 
   const handleChange = (e) => {
-    setFirstName(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handleSumbit = (e) => {
@@ -20,12 +20,12 @@ function Login({ props }) {
       data: form.serialize() + "&" + $.param({ login: "login" }), // them role
       success(res) {
         console.log("resAjax: ", res);
-        if (res == "true") {
-          props(true);
+        if (res == "true"){
+          props()
+          setIsAdmin(true)
         }
-        if (res == 2) {
-          props(2);
-        }
+        //console.log("Json parse resAjax: ", JSON.parse(res));
+
       },
     });
   };
@@ -44,22 +44,22 @@ function Login({ props }) {
         method="post"
       >
         <h1>Log in</h1>
-        <label htmlFor="firstName">Email</label>
+        <label htmlFor="email">Email</label>
         <input
           id="email"
           type="text"
           ref={textInput}
           name="email"
-          value={firstName}
+          value={email}
           onChange={(event) => handleChange(event)}
         />
-        <label htmlFor="lastName">Password</label>
+        <label htmlFor="pass">Password</label>
         <input
           id="pass"
           type="text"
           name="pass"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
         />
 
         <div style={{ marginTop: "30px" }}>

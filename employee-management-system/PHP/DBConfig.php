@@ -42,25 +42,93 @@
     }
 
     public function insertData($firstName, $lastName, $email, $salary, $date){
-        $sql = "INSERT INTO nhanvien(firstName,lastName,email,salary,date) VALUES ('$firstName','$lastName','$email','$salary','$date')";
+        $sql = "INSERT INTO nhanvientest(firstName,lastName,email,salary,date,role) VALUES ('$firstName','$lastName','$email','$salary','$date','0')";
         $rs = $this->execute($sql);
         return $this->console_log("result of insert DB : $rs");
         //return $this->execute($sql);
     }
 
+    public function nvGetListShift($date, $id){       
+        $sql = "SELECT * FROM phanca WHERE date =  '$date' ";
+        $rs = mysqli_query($this->connect(),$sql);     
+        $arrShift = array("" , ""); 
+        while($list = mysqli_fetch_object($rs)){
+            $arr_id = json_decode($list->list_ID_NV);        
+            foreach($arr_id as $i){  
+                if($i == $id){
+                    $string = "" ;                                     
+                    foreach($arr_id as $j){
+                        $sql = "SELECT firstName, lastName FROM nhanvientest WHERE id = $j ";
+                        $rscolleagues = mysqli_query($this->connect(),$sql);
+                        //echo " rscoll:  ";
+                        file_put_contents('checkrscoll.txt', var_export(json_encode($rscolleagues), true)); 
+                        //$this->console_log($rscolleagues);        
+                        $nv = mysqli_fetch_object($rscolleagues);
+                        //echo " NV fetch obj :"; 
+                        //echo $nv; 
+                        // echo "string",$string;
+                        file_put_contents('checknvshift.txt', var_export(json_encode($nv), true)); 
+                        $string = $string."'".$nv->firstName." ".$nv->lastName."' ";
+                    }
+                    if($list->shift == 1){
+                        $arrShift[0].=$string;
+                    } else if($list->shift == 2){
+                        $arrShift[1].=$string;
+                    }
+                }
+            }
+        }
+        $jsonArrShift = json_encode($arrShift);
+        echo $jsonArrShift;
+        return ;
+    }
+
     public function getDataNV(){
-        $sql = "SELECT *  FROM nhanvien ";
+        $sql = "SELECT *  FROM nhanvientest ";
         return $this->execute($sql);
     }
 
     public function getListIDNV(){
-        $sql = "SELECT * FROM nhanvien WHERE namsinh = 1999 ";
+        $sql = "SELECT * FROM nhanvientest WHERE namsinh = 1999 ";
         $rs = mysqli_query($this->connect(),$sql);
         // return $this->console_log($rs);
-        $nv = mysqli_fetch_a($rs,MYSQLI_ASSOC);
+        $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
         mysqli_free_result($rs);
         
         return $this->console_log($nv);
+    }
+
+    public function adminGetListShift($date, $shift){       
+        $sql = "SELECT * FROM phanca WHERE date =  '$date' AND shift = '$shift' ";
+        $rs = mysqli_query($this->connect(),$sql);
+        //$this->console_log("Result: ");
+        //$this->console_log($rs);
+        $listShift = "";
+         
+        while($list = mysqli_fetch_object($rs)){
+            //echo 9999;
+            $arr_id = json_decode($list->list_ID_NV);        
+                                   
+                    foreach($arr_id as $i){
+                        $sql = "SELECT firstName, lastName FROM nhanvientest WHERE id = $i ";
+                        $rscolleagues = mysqli_query($this->connect(),$sql);
+
+                        $nv = mysqli_fetch_object($rscolleagues);  
+                        $listShift = $listShift ."'".$nv->firstName." ".$nv->lastName."' ";
+                    }
+
+        }
+        $this->console_log($listShift);
+        return $listShift;
+
+    }
+
+    public function getNVbyID($id){
+        $sql = "SELECT * FROM nhanvientest WHERE id= '$id' ";
+        $rs = mysqli_query($this->connect(),$sql);
+        $nv = mysqli_fetch_object($rs); 
+        $jsonNV = json_encode($nv);
+        echo $jsonNV;
     }
 
     public function updateIDNV($new_value){
@@ -98,31 +166,13 @@
         return $this->updateIDNV($new_arr_id) ;
     }
 
-    public function getListData() {
-
-        $sql = "SELECT * FROM nhanvien";
-
+    public function getListNV() {
+        $sql = "SELECT * FROM nhanvientest";
         $rs = mysqli_query($this->connect(),$sql);
-
-        // return $this->console_log($rs);
-
         $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
-
-        // $this->console_log("Type of nv");
-
-        // $this->console_log(gettype($nv));
-
-        // $this->console_log(gettype("Type of nv0 : "));
-
-        // $this->console_log(gettype($nv[0]));
-
-        // $this->console_log($nv);
-
         mysqli_free_result($rs);
-
         $json_nv = json_encode($nv);
         echo $json_nv ;
-
         return;
     }
 
@@ -136,12 +186,12 @@
 
     public function deleteNVbyID($id){
     
-        $sql = "DELETE FROM `nhanvien` WHERE id = '$id'";
+        $sql = "DELETE FROM `nhanvientest` WHERE id = '$id'";
         $this->execute($sql);
     }
 
     public function updateNVbyID($id, $firstName, $lastName, $email, $salary, $date){
-        $sql = "UPDATE `nhanvien` SET `firstName`='$firstName',`lastName`='$lastName',
+        $sql = "UPDATE `nhanvientest` SET `firstName`='$firstName',`lastName`='$lastName',
         `email`='$email',`salary`='$salary',`date`='$date' WHERE `id`='$id' ";
         $this->execute($sql);
     }
@@ -157,20 +207,11 @@
     }
 
     public function checkLogin($username){
-
-        $sql = "SELECT id,email,salary FROM nhanvien WHERE email = '$username'";
-
+        $sql = "SELECT id,email,salary,role FROM nhanvientest WHERE email = '$username'";
         $rs = $this->execute($sql);
-
         $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
-
-        //echo $row ;
-
         return $row ;
-
     }
-
-
  }
 
 ?>

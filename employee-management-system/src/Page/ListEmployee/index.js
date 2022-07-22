@@ -21,12 +21,9 @@ function Dashboard() {
       type: "GET",
       url: url,
       data:
-        "&" +
         $.param({
-          opcode: "getListData",
-          date: "2001-20-11",
-          shift: "1",
-          id: "1",
+          opcode: "getListNV",
+          role:"admin",
         }),
       success(res) {
         const data = JSON.parse(res);
@@ -73,9 +70,10 @@ function Dashboard() {
         const form = $(e.target);
         $.ajax({
           type: "POST",
-          url: "http://localhost:8000/server.php",
-          data: "&" + $.param({ opcode: "deleteNVbyID", id: id }),
+          url: url,
+          data: $.param({ role:"admin",opcode: "deleteNVbyID", id: id }),
           success(data) {
+            console.log(" Deleted id",id)
             console.log("Type of fron end: ", data);
           },
         });

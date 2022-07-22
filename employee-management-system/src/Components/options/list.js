@@ -1,5 +1,5 @@
 import React from "react";
-import Dashboard from "../../Page/Dashboard";
+import Dashboard from "../../Page/ListEmployee";
 
 const List = () => {
   return (

@@ -9,26 +9,19 @@ import {
 } from "./NavbarElements";
 
 const Navbar = () => {
-  const checked = true;
   return (
     <>
       <Nav>
         <Bars />
         <NavMenu>
-          <NavLink to="/about">Information</NavLink>
-          <NavLink to="/events">Calendar</NavLink>
-          <NavLink to="/list">List Employee</NavLink>
-          <>
-            {checked ? (
-              <NavLink to="/annoucement">Make Announcement</NavLink>
-            ) : (
-              <></>
-            )}
-          </>
+            <NavLink to="/about">Information</NavLink>
+            <NavLink to="/events">Calendar</NavLink>
+            <NavLink to="/list">List Employee</NavLink>                     
+            <NavLink to="/annoucement">Announcement</NavLink>
         </NavMenu>
         <NavBtn>
-          <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
-          <NavBtnLink to="/signin">Sign In</NavBtnLink>
+          <NavBtnLink to="/logout">Log out</NavBtnLink>
+          <NavBtnLink to="/login">Log In</NavBtnLink>
         </NavBtn>
       </Nav>
     </>

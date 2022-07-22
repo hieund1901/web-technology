@@ -37,7 +37,7 @@ const Annoucements = () => {
           id="title"
           type="text"
           name="title"
-          //value={title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <label htmlFor="content">Content</label>
@@ -45,7 +45,7 @@ const Annoucements = () => {
           id="content"
           type="text"
           name="content"
-          //value={content}
+          value={content}
           onChange={(e) => setContent(e.target.value)}
         />
 
@@ -54,7 +54,7 @@ const Annoucements = () => {
           id="date"
           type="date"
           name="date"
-          //value={date}
+          value={date}
           onChange={(e) => setDate(e.target.value)}
         />
         <div style={{ marginTop: "30px" }}>

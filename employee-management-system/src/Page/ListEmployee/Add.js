@@ -144,28 +144,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
           />
         </div>
       </form>
-      {/* <form
-        action="http://localhost:8000/server.php"
-        onSubmit={(event) => getAJAX(event)}
-        method="get"
-      >
-        <label htmlFor="getAJAX">GET</label>
-
-        <div style={{ marginTop: "30px" }}>
-          <input type="submit" value="Get" />
-
-          <input
-            style={{ marginLeft: "12px" }}
-            className="muted-button"
-            type="button"
-            value="Cancel"
-            onClick={() => setIsAdding(false)}
-          />
-        </div>
-      </form>
-      {result.map((res) => {
-        return <h2>{res.firstName}</h2>;
-      })} */}
     </div>
   );
 }
