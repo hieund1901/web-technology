@@ -69,6 +69,7 @@
             $email = $rsCheckLogin['email'];
             $id = $rsCheckLogin["id"];
             $pass = $rsCheckLogin["salary"];
+            $role = $rsCheckLogin["role"];
             if (is_array($rsCheckLogin)){
                 $_SESSION["$email"]=$email;
                 $_SESSION["$id"] = $id;           
@@ -77,10 +78,14 @@
                 // $response_login = ["true","role","$id"] ; 
                 // $res = json_encode($response_login);  
                 // return $res ;
-                echo "true";
+                if ($role == 0){
+                    echo "trueemployee";
+                }else{
+                    echo "trueadmin";
+                }                
             }
             else {
-                echo "Fail login";
+                echo "Server Fail login";
             }
         }
 
@@ -101,13 +106,13 @@
                     switch ($opcode_post){
                         case "addNV":
 
-                            // $firstName = $_POST['firstName'];
-                            // $lastName = $_POST['lastName'];
-                            // $email = $_POST['email'];
-                            // $salary = $_POST['salary'];
-                            // $date = $_POST['date'];
-                            // $rs = $db->insertData($firstName, $lastName, $email, $salary, $date);
-                            // echo " Rs opcode add : $rs";
+                            $firstName = $_POST['firstName'];
+                            $lastName = $_POST['lastName'];
+                            $email = $_POST['email'];
+                            $salary = $_POST['salary'];
+                            $date = $_POST['date'];
+                            $rs = $db->insertData($firstName, $lastName, $email, $salary, $date);
+                            echo $rs;
                             break ;
                         case "updateNVbyID":
                             $id = $_POST['id'];
@@ -156,17 +161,10 @@
         
 
     //Sau khi login ms nhan cac request , check moi request bang email
-    //echo " method_POST";
-    // $firstName = $_POST['firstName'];
-    // $lastName = $_POST['lastName'];
-    // $email = $_POST['email'];
-    // $salary = $_POST['salary'];
-    // $date = $_POST['date'];
-    // $db->insertData($firstName, $lastName, $email, $salary, $date);
-    //file_put_contents('postaddparamdata.txt', var_export(json_encode($_POST), true));
+
+ 
     //$param_login = $_POST['param1'];//test log in , log out
-    //$param_logout = $_POST['param2/logout'];//gui kèm thông tin user để sau đó check trong session ton tai chưa / log in chưa .
-    //$checkLogin->checkAccountandRole($param_login);   
+    //$param_logout = $_POST['param2/logout'];//gui kèm thông tin user để sau đó check trong session ton tai chưa / log in chưa . 
 
 
         file_put_contents('session.txt', var_export(json_encode($_SESSION), true));
@@ -178,5 +176,11 @@
 
             
         session_destroy();
+
+        // if(count($_SESSION) === 0){//neu $_Session rỗng 
+        //     // echo " Destroy Session";
+     
+        //      session_destroy();
+        //  }
     
 ?>

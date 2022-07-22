@@ -31,7 +31,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
       url: url,
       data: form.serialize() + "&" + $.param({ opcode: "addNV" }),
       success(data) {
-        setResult(data);
+        setResult(data);// neu them thanh cong thi ms hien Swal 
       },
     });
     if (!firstName || !lastName || !email || !salary || !date) {

@@ -20,12 +20,20 @@ function Login({ props , setIsAdmin }) {
       data: form.serialize() + "&" + $.param({ login: "login" }), // them role
       success(res) {
         console.log("resAjax: ", res);
-        if (res == "true"){
+        if (res == "trueadmin"){
           props()
-          setIsAdmin(true)
+          setIsAdmin(true)// them 1 props luu lai id cho cac lan request sau 
         }
         //console.log("Json parse resAjax: ", JSON.parse(res));
-
+         else if (res == "trueemployee"){
+          props()
+          setIsAdmin(false)
+        } else {
+          console.log (" Error Login ")
+        }
+        
+        //  khi ko dang nhập đc vs cả admin cả user , có thể props(false), sau đó thêm dòng tbao log in lỗi . 
+        //Thêm 1 div chứa đoạn tbao log in lỗi và thuộc tính show or hire phụ thuộc 1 biến props : show={ErrorLogin} voi error login : true or false.     
       },
     });
   };
