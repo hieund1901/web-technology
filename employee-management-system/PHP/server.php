@@ -24,11 +24,7 @@
                         echo "date and shift";
                         echo $date,$shift;
                         $db->adminGetListShift($date, $shift);
-                        break; 
-                    case "getNVbyID":
-                        $id = $_GET['id'];
-                        $db->getNVbyID($id);
-                        break;                   
+                        break;                  
                 }
                 break;
             case "employee":
@@ -42,13 +38,14 @@
                         echo " nvGetListShft OK ";
                         break; 
                     case "getListNotification":
-                        echo " get ListNoti ";
                         $idNV = $_GET['id'];
-                        echo " idNV: ";
-                        echo $idNV;
                         file_put_contents('checkIdIngetListNoti.txt', var_export(json_encode($idNV), true));
                         $db->getListNotification($idNV);
-                        break;                   
+                        break;   
+                    case "getNVbyID":
+                        $id = $_GET['id'];
+                        $db->getNVbyID($id);
+                        break;                  
                 }
             break;
 

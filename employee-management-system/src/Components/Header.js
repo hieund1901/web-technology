@@ -6,7 +6,7 @@ function Header({ setIsAdding }) {
       <h1>Admin</h1>
       <div style={{ marginTop: "30px", marginBottom: "18px" }}>
         <button onClick={() => setIsAdding(true)} className="round-button">
-          Add Button
+          Add Employee
         </button>
       </div>
     </header>

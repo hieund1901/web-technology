@@ -4,12 +4,6 @@ import $ from "jquery";
 function ListNoti({ notification }) {
   const url = "http://localhost:8000/server.php";
 
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: null,
-  });
-
   const handleRead = (Id, e) => {
     $.ajax({
       type: "POST",
@@ -27,14 +21,10 @@ function ListNoti({ notification }) {
         <thead>
           <tr>
             <th>No.</th>
-            {/* <th>Id</th> */}
             <th>Title</th>
             <th>Content</th>
             <th>Date</th>
-            <th>status</th>
-            <th colSpan={2} className="text-center">
-              Actions
-            </th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -48,13 +38,12 @@ function ListNoti({ notification }) {
 
                 {notification.isRead == 1 ? <td> Old </td> : <td> New</td>}
                 <td className="text-right">
-                  <button
+                  <p
                     onClick={(event) => handleRead(notification.id, event)}
                     className="button muted-button"
-                    s
                   >
-                    Reader
-                  </button>
+                    Seen
+                  </p>
                 </td>
               </tr>
             ))
@@ -63,9 +52,6 @@ function ListNoti({ notification }) {
               <td colSpan={7}>No notification</td>
             </tr>
           )}
-          <tr>
-            <td colSpan={7}>No notification</td>
-          </tr>
         </tbody>
       </table>
     </div>

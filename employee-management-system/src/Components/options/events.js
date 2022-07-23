@@ -6,7 +6,7 @@ const Events = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "right",
       }}
     >

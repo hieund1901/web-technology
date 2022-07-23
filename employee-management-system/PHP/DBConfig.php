@@ -126,8 +126,9 @@
     public function getNVbyID($id){
         $sql = "SELECT * FROM nhanvien WHERE id= '$id' ";
         $rs = mysqli_query($this->connect(),$sql);
-        $nv = mysqli_fetch_object($rs); 
+        $nv = mysqli_fetch_array($rs,MYSQLI_ASSOC); 
         $jsonNV = json_encode($nv);
+        file_put_contents('checkgetNV.txt', var_export(json_encode($jsonNV), true)); 
         echo $jsonNV;
     }
 
@@ -177,7 +178,7 @@
     }
 
     public function getListNotification($idNV){
-        $sql = "SELECT * FROM thongbao  WHERE id_NV = $idNV ";
+        $sql = "SELECT * FROM account  WHERE id_NV = $idNV ";
         $rs = mysqli_query($this->connect(),$sql);     
         $data = mysqli_fetch_all($rs, MYSQLI_ASSOC);
         $jsonData = json_encode($data);
@@ -196,13 +197,13 @@
         $this->execute($sql);
     }
     public function createNotification($idNV, $date, $title, $content){
-        $sql = "INSERT INTO `thongbao`(`id_nv`, `date`, `title`, `content`, `isRead`)
+        $sql = "INSERT INTO `account`(`id_nv`, `date`, `title`, `content`, `isRead`)
         VALUES ('$idNV','$date','$title','$content','0')";
         $this->execute($sql);
 
     }
     public function readNotification($id){
-        $sql = "UPDATE `thongbao` SET `isRead`='1' WHERE `id`='$id'";
+        $sql = "UPDATE `account` SET `isRead`='1' WHERE `id`='$id'";
         $this->execute($sql);
     }
 
