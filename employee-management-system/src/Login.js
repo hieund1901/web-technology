@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 //import Swal from "sweetalert2";
 import $ from "jquery";
 
-function Login({ props , setIsAdmin }) {
+function Login({ props, setIsAdmin }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   //const url = "http://localhost:8000/server.php";
@@ -20,20 +20,20 @@ function Login({ props , setIsAdmin }) {
       data: form.serialize() + "&" + $.param({ login: "login" }), // them role
       success(res) {
         console.log("resAjax: ", res);
-        if (res == "trueadmin"){
-          props()
-          setIsAdmin(true)// them 1 props luu lai id cho cac lan request sau 
+        if (res == "trueadmin") {
+          props();
+          setIsAdmin(true); // them 1 props luu lai id cho cac lan request sau
         }
         //console.log("Json parse resAjax: ", JSON.parse(res));
-         else if (res == "trueemployee"){
-          props()
-          setIsAdmin(false)
+        else if (res == "trueemployee") {
+          props();
+          setIsAdmin(false);
         } else {
-          console.log (" Error Login ")
+          console.log(" Error Login ");
         }
-        
-        //  khi ko dang nhập đc vs cả admin cả user , có thể props(false), sau đó thêm dòng tbao log in lỗi . 
-        //Thêm 1 div chứa đoạn tbao log in lỗi và thuộc tính show or hire phụ thuộc 1 biến props : show={ErrorLogin} voi error login : true or false.     
+
+        //  khi ko dang nhập đc vs cả admin cả user , có thể props(false), sau đó thêm dòng tbao log in lỗi .
+        //Thêm 1 div chứa đoạn tbao log in lỗi và thuộc tính show or hire phụ thuộc 1 biến props : show={ErrorLogin} voi error login : true or false.
       },
     });
   };

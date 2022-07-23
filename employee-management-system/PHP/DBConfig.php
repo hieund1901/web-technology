@@ -42,7 +42,7 @@
     }
 
     public function insertData($firstName, $lastName, $email, $salary, $date){
-        $sql = "INSERT INTO nhanvientest(firstName,lastName,email,salary,date,role) VALUES ('$firstName','$lastName','$email','$salary','$date','0')";
+        $sql = "INSERT INTO nhanvien(firstName,lastName,email,salary,date,role) VALUES ('$firstName','$lastName','$email','$salary','$date','0')";
         $rs = $this->execute($sql);
         return $this->console_log("result of insert DB : $rs");
         //return $this->execute($sql);
@@ -58,7 +58,7 @@
                 if($i == $id){
                     $string = "" ;                                     
                     foreach($arr_id as $j){
-                        $sql = "SELECT firstName, lastName FROM nhanvientest WHERE id = $j ";
+                        $sql = "SELECT firstName, lastName FROM nhanvien WHERE id = $j ";
                         $rscolleagues = mysqli_query($this->connect(),$sql);
                         //echo " rscoll:  ";
                         file_put_contents('checkrscoll.txt', var_export(json_encode($rscolleagues), true)); 
@@ -84,12 +84,12 @@
     }
 
     public function getDataNV(){
-        $sql = "SELECT *  FROM nhanvientest ";
+        $sql = "SELECT *  FROM nhanvien ";
         return $this->execute($sql);
     }
 
     public function getListIDNV(){
-        $sql = "SELECT * FROM nhanvientest WHERE namsinh = 1999 ";
+        $sql = "SELECT * FROM nhanvien WHERE namsinh = 1999 ";
         $rs = mysqli_query($this->connect(),$sql);
         // return $this->console_log($rs);
         $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
@@ -110,7 +110,7 @@
             $arr_id = json_decode($list->list_ID_NV);        
                                    
                     foreach($arr_id as $i){
-                        $sql = "SELECT firstName, lastName FROM nhanvientest WHERE id = $i ";
+                        $sql = "SELECT firstName, lastName FROM nhanvien WHERE id = $i ";
                         $rscolleagues = mysqli_query($this->connect(),$sql);
 
                         $nv = mysqli_fetch_object($rscolleagues);  
@@ -124,7 +124,7 @@
     }
 
     public function getNVbyID($id){
-        $sql = "SELECT * FROM nhanvientest WHERE id= '$id' ";
+        $sql = "SELECT * FROM nhanvien WHERE id= '$id' ";
         $rs = mysqli_query($this->connect(),$sql);
         $nv = mysqli_fetch_object($rs); 
         $jsonNV = json_encode($nv);
@@ -167,7 +167,7 @@
     }
 
     public function getListNV() {
-        $sql = "SELECT * FROM nhanvientest";
+        $sql = "SELECT * FROM nhanvien";
         $rs = mysqli_query($this->connect(),$sql);
         $nv = mysqli_fetch_all($rs,MYSQLI_ASSOC);
         mysqli_free_result($rs);
@@ -186,12 +186,12 @@
 
     public function deleteNVbyID($id){
     
-        $sql = "DELETE FROM `nhanvientest` WHERE id = '$id'";
+        $sql = "DELETE FROM `nhanvien` WHERE id = '$id'";
         $this->execute($sql);
     }
 
     public function updateNVbyID($id, $firstName, $lastName, $email, $salary, $date){
-        $sql = "UPDATE `nhanvientest` SET `firstName`='$firstName',`lastName`='$lastName',
+        $sql = "UPDATE `nhanvien` SET `firstName`='$firstName',`lastName`='$lastName',
         `email`='$email',`salary`='$salary',`date`='$date' WHERE `id`='$id' ";
         $this->execute($sql);
     }
@@ -207,7 +207,7 @@
     }
 
     public function checkLogin($username){
-        $sql = "SELECT id,email,salary,role FROM nhanvientest WHERE email = '$username'";
+        $sql = "SELECT id,email,salary,role FROM nhanvien WHERE email = '$username'";
         $rs = $this->execute($sql);
         $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
         return $row ;
